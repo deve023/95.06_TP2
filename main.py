@@ -1,3 +1,5 @@
+from jugador import *
+
 class Jugador():
     
     def __init__(self, name):
@@ -37,19 +39,21 @@ def parse(path):
     
     return cards
 
-print(parse('ej.txt'))
+# Testeos
 
-player1 = Jugador("Jugador 1")
-player2 = Jugador("Jugador 2")
+#print(parse('ej.txt'))
 
-player1.addCard(1)
-player1.addCard(3)
-player1.addCard(5)
-player2.addCard(1)
-player2.addCard(2)
+#player1 = Jugador("Jugador 1")
+#player2 = Jugador("Jugador 2")
 
-player1.scoreAdd(50)
-player2.scoreAdd(25)
+#player1.addCard(1)
+#player1.addCard(3)
+#player1.addCard(5)
+#player2.addCard(1)
+#player2.addCard(2)
 
-player1.info()
-player2.info()
+#player1.scoreAdd(50)
+#player2.scoreAdd(25)
+
+#player1.info()
+#player2.info()
