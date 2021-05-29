@@ -1,4 +1,5 @@
 from player import *
+from sys import argv
 
 def parse(path):
     cards = []
@@ -7,13 +8,24 @@ def parse(path):
         cardsString = File.readline().split(',')
         
         for c in cardsString:
-            cards.append(int(c))
-    
+            value = 0
+            try:
+                value = int(c)
+            except ValueError:
+                continue # saltea si no es un digito
+            cards.append(value)
     return cards
+
+def main(argv):
+    assert len(argv) == 2
+
+    cards = parse(argv[1])
+    print(cards)
+
 
 # Testeos
 
-#print(parse('ej.txt'))
+main(argv)
 
 #player1 = Player("Jugador 1")
 #player2 = Player("Jugador 2")
@@ -24,8 +36,8 @@ def parse(path):
 #player2.addCard(1)
 #player2.addCard(2)
 
-#player1.scoreAdd(50)
-#player2.scoreAdd(25)
+#player1.setScore(50)
+#player2.setScore(25)
 
 #player1.info()
 #player2.info()
