@@ -1,4 +1,4 @@
-from jugador import *
+from player import *
 
 def parse(path):
     cards = []
@@ -15,8 +15,8 @@ def parse(path):
 
 #print(parse('ej.txt'))
 
-#player1 = Jugador("Jugador 1")
-#player2 = Jugador("Jugador 2")
+#player1 = Player("Jugador 1")
+#player2 = Player("Jugador 2")
 
 #player1.addCard(1)
 #player1.addCard(3)
