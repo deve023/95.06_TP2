@@ -21,7 +21,15 @@ class Player():
         self.__cards.append(c)
     
     def info(self):
-        print(self.__name + ':')
-        print("Cartas elegidas: ")
-        print(self.__cards) # Deberia ir en junto con la linea anterior
-        print("Puntos sumados: " + str(self.__score))
+        # Imprime por pantalla la data del jugador
+
+        print( str(self.__name) + ':')
+
+        outCards = "Cartas elegidas: "
+        for i in range(1, len(self.__cards)):
+            outCards += str(self.__cards[i]) + ", "
+        outCards += str(self.__cards[-1])
+        print(outCards)
+        
+        print("Puntos sumados: " + str(self.__score) + '\n')
+
