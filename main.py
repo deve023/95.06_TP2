@@ -1,6 +1,7 @@
 from player import *
 from sys import argv
 
+# Lee el archivo de entrada y devuelve un arreglo con las cartas en juego
 def parse(path):
     cards = []
 
@@ -16,6 +17,7 @@ def parse(path):
             cards.append(value)
     return cards
 
+# Arma los diccionarios opt y eleccion
 def armarDiccionarios(array):
     #clave: subarreglo    valor: ÍNDICE de carta a sacar
     opt = {}
@@ -37,14 +39,14 @@ def armarDiccionarios(array):
             #caso base para saber cuál es la óptima a sacar en este subarreglo
             if setCartas not in opt:
                 eleccion_optima(setCartas, eleccion, opt)
-                solucion_optima(setCartas, eleccion, opt)
-                #if setCartas in opt:
-                    #print(setCartas, " ", opt[setCartas])                
+                solucion_optima(setCartas, eleccion, opt)                
                 
         size += 1
 
     return eleccion, opt 
 
+# Guarda en eleccion la eleccion optima de setCartas
+# Guarda la posicion de la carta a elegir en setCartas
 def eleccion_optima(setCartas, eleccion, opt):
     # devuelve el indice de setCartas de la carta a elegir
 
@@ -52,9 +54,6 @@ def eleccion_optima(setCartas, eleccion, opt):
         eleccion[setCartas] = setCartas.index(max(setCartas))
 
     else:
-        #print(opt[setCartas[1:]])
-        #print(opt[setCartas[:-1]])
-        #print(setCartas)
         if opt[setCartas[1:]] == opt[setCartas[:-1]]:
             eleccion[setCartas] = setCartas.index(max(setCartas[0], setCartas[-1]))
         elif opt[setCartas[1:]] > opt[setCartas[:-1]]:
@@ -62,72 +61,59 @@ def eleccion_optima(setCartas, eleccion, opt):
         else:
             eleccion[setCartas] = 0
 
+# Guarda en opt el mejor puntaje que se puede obtener de setCartas
 def solucion_optima(setCartas, eleccion, opt):
 
     if len(setCartas) <= 2:
         opt[setCartas] = max(setCartas)
 
     else:
-        #print(setCartas)
         e1 = eleccion[setCartas]
         if e1 == 0:
-            #print("e1 = 0")
             e2 = eleccion[setCartas[1:]]
             if e2 == 0:
-                #print("e2 = 0")
                 opt[setCartas] = setCartas[e1] + opt[setCartas[2:]]
             elif e2 == -1 or e2 == len(setCartas[1:]) - 1:
-                #print("e2 = -1")
                 opt[setCartas] = setCartas[e1] + opt[setCartas[1:-1]]
 
         elif e1 == -1 or e1 == len(setCartas) - 1:
-            #print("e1 = -1")
             e2 = eleccion[setCartas[:-1]]
-            #print(setCartas[:-1], e2)
             if e2 == 0:
-                #print("e2 = 0")
                 opt[setCartas] = setCartas[e1] + opt[setCartas[1:-1]]
             elif e2 == -1 or e2 == len(setCartas[1:]) - 1:
-                #print("e2 = -1")
                 opt[setCartas] = setCartas[e1] + opt[setCartas[:-2]]
 
+# Agrega a firstPlayer y secondPlayer las cartas optimas que van eligiendo
+def cartasElegidas(X, eleccion, firstPlayer,  secondPlayer):
+    X = tuple(X)
 
-def imprimirDiccionario(dic):
-    for clave in dic:
-        print(clave, ":", dic[clave])
+    for i in range(len(X)):
+        e = eleccion[X]
+        
+        if i % 2 == 0:
+            firstPlayer.addCard(X[e])
+        else:
+            secondPlayer.addCard(X[e])
+
+        if e == 0:
+            X = X[1:]
+        else:
+            X = X[:-1]
 
 def main(argv):
     assert len(argv) == 2
 
     cards = parse(argv[1])
-    print(cards)
 
     eleccion, opt = armarDiccionarios(cards)
 
-    imprimirDiccionario(eleccion)
-    print("--------------")
-    imprimirDiccionario(opt)
+    firstPlayer = Player("Jugador 1")
+    secondPlayer = Player("Jugador 2")
 
-    # iterar los diccionarios y hacer  player.addCard() y player.addScore() con cada carta
-    # finalmente player.info()
+    cartasElegidas(cards, eleccion, firstPlayer, secondPlayer)
 
+    firstPlayer.info()
+    secondPlayer.info()
 
-
-# Testeos
 
 main(argv)
-
-#player1 = Player("Jugador 1")
-#player2 = Player("Jugador 2")
-
-#player1.addCard(1)
-#player1.addCard(3)
-#player1.addCard(5)
-#player2.addCard(1)
-#player2.addCard(2)
-
-#player1.scoreAdd(50)
-#player2.scoreAdd(25)
-
-#player1.info()
-#player2.info()
