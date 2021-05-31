@@ -18,6 +18,7 @@ class Player():
         return self.__cards
     
     def addCard(self, c):
+        self.scoreAdd(c)
         self.__cards.append(c)
     
     def info(self):
@@ -26,7 +27,7 @@ class Player():
         print( str(self.__name) + ':')
 
         outCards = "Cartas elegidas: "
-        for i in range(1, len(self.__cards)):
+        for i in range(0, len(self.__cards)-1):
             outCards += str(self.__cards[i]) + ", "
         outCards += str(self.__cards[-1])
         print(outCards)
